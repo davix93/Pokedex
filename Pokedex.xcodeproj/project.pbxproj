@@ -3,17 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		6B76BF752406D831005B1AC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BF742406D831005B1AC3 /* AppDelegate.swift */; };
 		6B76BF772406D831005B1AC3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BF762406D831005B1AC3 /* SceneDelegate.swift */; };
-		6B76BF792406D831005B1AC3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BF782406D831005B1AC3 /* ViewController.swift */; };
+		6B76BF792406D831005B1AC3 /* PokedexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BF782406D831005B1AC3 /* PokedexViewController.swift */; };
 		6B76BF7E2406D832005B1AC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B76BF7D2406D832005B1AC3 /* Assets.xcassets */; };
 		6B76BF812406D832005B1AC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B76BF7F2406D832005B1AC3 /* LaunchScreen.storyboard */; };
 		6B76BF8C2406D832005B1AC3 /* PokedexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BF8B2406D832005B1AC3 /* PokedexTests.swift */; };
 		6B76BF972406D832005B1AC3 /* PokedexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BF962406D832005B1AC3 /* PokedexUITests.swift */; };
+		6B76BFA52406DE7C005B1AC3 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BFA42406DE7C005B1AC3 /* Model.swift */; };
+		6B76BFA92406DECD005B1AC3 /* PokedexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BFA82406DECD005B1AC3 /* PokedexView.swift */; };
+		6B76BFAC2406DF15005B1AC3 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 6B76BFAB2406DF15005B1AC3 /* PinLayout */; };
+		6B76BFAE2407CC45005B1AC3 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BFAD2407CC45005B1AC3 /* APIClient.swift */; };
+		6B76BFB12407CC8D005B1AC3 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BFB02407CC8D005B1AC3 /* NetworkError.swift */; };
+		6B76BFB32407DF56005B1AC3 /* PokedexAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BFB22407DF56005B1AC3 /* PokedexAPIClient.swift */; };
+		6B76BFB72407F1A8005B1AC3 /* PokedexCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BFB62407F1A8005B1AC3 /* PokedexCell.swift */; };
+		6B76BFB924081F19005B1AC3 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B76BFB824081F19005B1AC3 /* Protocol.swift */; };
+		6BE1CC8624083CBC00DE0CFE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6BE1CC8524083CBC00DE0CFE /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +46,7 @@
 		6B76BF712406D831005B1AC3 /* Pokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B76BF742406D831005B1AC3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B76BF762406D831005B1AC3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6B76BF782406D831005B1AC3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6B76BF782406D831005B1AC3 /* PokedexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexViewController.swift; sourceTree = "<group>"; };
 		6B76BF7D2406D832005B1AC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B76BF802406D832005B1AC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B76BF822406D832005B1AC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +56,13 @@
 		6B76BF922406D832005B1AC3 /* PokedexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokedexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B76BF962406D832005B1AC3 /* PokedexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexUITests.swift; sourceTree = "<group>"; };
 		6B76BF982406D832005B1AC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B76BFA42406DE7C005B1AC3 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		6B76BFA82406DECD005B1AC3 /* PokedexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexView.swift; sourceTree = "<group>"; };
+		6B76BFAD2407CC45005B1AC3 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		6B76BFB02407CC8D005B1AC3 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		6B76BFB22407DF56005B1AC3 /* PokedexAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexAPIClient.swift; sourceTree = "<group>"; };
+		6B76BFB62407F1A8005B1AC3 /* PokedexCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexCell.swift; sourceTree = "<group>"; };
+		6B76BFB824081F19005B1AC3 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BE1CC8624083CBC00DE0CFE /* Kingfisher in Frameworks */,
+				6B76BFAC2406DF15005B1AC3 /* PinLayout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +117,10 @@
 			children = (
 				6B76BF742406D831005B1AC3 /* AppDelegate.swift */,
 				6B76BF762406D831005B1AC3 /* SceneDelegate.swift */,
-				6B76BF782406D831005B1AC3 /* ViewController.swift */,
+				6B76BFB824081F19005B1AC3 /* Protocol.swift */,
+				6B76BFA62406DE82005B1AC3 /* Model */,
+				6B76BFAF2407CC7F005B1AC3 /* Networking */,
+				6B76BFB52407F15F005B1AC3 /* PokedexScreen */,
 				6B76BF7D2406D832005B1AC3 /* Assets.xcassets */,
 				6B76BF7F2406D832005B1AC3 /* LaunchScreen.storyboard */,
 				6B76BF822406D832005B1AC3 /* Info.plist */,
@@ -125,6 +146,50 @@
 			path = PokedexUITests;
 			sourceTree = "<group>";
 		};
+		6B76BFA62406DE82005B1AC3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6B76BFA42406DE7C005B1AC3 /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6B76BFA72406DE97005B1AC3 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6B76BF782406D831005B1AC3 /* PokedexViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		6B76BFAF2407CC7F005B1AC3 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				6B76BFAD2407CC45005B1AC3 /* APIClient.swift */,
+				6B76BFB02407CC8D005B1AC3 /* NetworkError.swift */,
+				6B76BFB22407DF56005B1AC3 /* PokedexAPIClient.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		6B76BFB42407F14F005B1AC3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6B76BFA82406DECD005B1AC3 /* PokedexView.swift */,
+				6B76BFB62407F1A8005B1AC3 /* PokedexCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6B76BFB52407F15F005B1AC3 /* PokedexScreen */ = {
+			isa = PBXGroup;
+			children = (
+				6B76BFB42407F14F005B1AC3 /* View */,
+				6B76BFA72406DE97005B1AC3 /* ViewController */,
+			);
+			path = PokedexScreen;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -141,6 +206,10 @@
 			dependencies = (
 			);
 			name = Pokedex;
+			packageProductDependencies = (
+				6B76BFAB2406DF15005B1AC3 /* PinLayout */,
+				6BE1CC8524083CBC00DE0CFE /* Kingfisher */,
+			);
 			productName = Pokedex;
 			productReference = 6B76BF712406D831005B1AC3 /* Pokedex.app */;
 			productType = "com.apple.product-type.application";
@@ -213,6 +282,10 @@
 				Base,
 			);
 			mainGroup = 6B76BF682406D831005B1AC3;
+			packageReferences = (
+				6B76BFAA2406DF15005B1AC3 /* XCRemoteSwiftPackageReference "PinLayout" */,
+				6BE1CC8424083CBB00DE0CFE /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 6B76BF722406D831005B1AC3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -255,9 +328,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B76BF792406D831005B1AC3 /* ViewController.swift in Sources */,
+				6B76BF792406D831005B1AC3 /* PokedexViewController.swift in Sources */,
 				6B76BF752406D831005B1AC3 /* AppDelegate.swift in Sources */,
+				6B76BFB32407DF56005B1AC3 /* PokedexAPIClient.swift in Sources */,
+				6B76BFA92406DECD005B1AC3 /* PokedexView.swift in Sources */,
 				6B76BF772406D831005B1AC3 /* SceneDelegate.swift in Sources */,
+				6B76BFB924081F19005B1AC3 /* Protocol.swift in Sources */,
+				6B76BFA52406DE7C005B1AC3 /* Model.swift in Sources */,
+				6B76BFB72407F1A8005B1AC3 /* PokedexCell.swift in Sources */,
+				6B76BFAE2407CC45005B1AC3 /* APIClient.swift in Sources */,
+				6B76BFB12407CC8D005B1AC3 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,13 +503,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K9VN75LY28;
+				DEVELOPMENT_TEAM = Q857SJ9WK2;
 				INFOPLIST_FILE = Pokedex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.DavideTarantino.Pokedex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DavideTarantino.Pokedexx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -441,13 +521,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K9VN75LY28;
+				DEVELOPMENT_TEAM = Q857SJ9WK2;
 				INFOPLIST_FILE = Pokedex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.DavideTarantino.Pokedex;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DavideTarantino.Pokedexx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -574,6 +654,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6B76BFAA2406DF15005B1AC3 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.13;
+			};
+		};
+		6BE1CC8424083CBB00DE0CFE /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.13.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6B76BFAB2406DF15005B1AC3 /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B76BFAA2406DF15005B1AC3 /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
+		};
+		6BE1CC8524083CBC00DE0CFE /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BE1CC8424083CBB00DE0CFE /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6B76BF692406D831005B1AC3 /* Project object */;
 }
