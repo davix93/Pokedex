@@ -12,7 +12,6 @@ import PinLayout
 class PokedexView: UIView, PokeView {
        
     private let tableView = UITableView()
-    
     var pokemons: [Pokemon?] = [] {
         didSet {
             self.tableView.reloadData()
@@ -23,9 +22,9 @@ class PokedexView: UIView, PokeView {
             self.tableView.reloadData()
         }
     }
+    var pokeSprites: [PokemonSprite] = []
     
     var fetchNextPokemons: ((Int,Int)->())?
-    
     
     init() {
         super.init(frame: .zero)
@@ -66,8 +65,8 @@ extension PokedexView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let count = self.pokemons.count
         
-        if indexPath.row == count - 5{
-            self.fetchNextPokemons?(count,20)
+        if indexPath.row == count - 2 {
+            self.fetchNextPokemons?(count + 1 ,10)
         }
     }
     
@@ -91,15 +90,8 @@ extension PokedexView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // The UITableView will call the cell's sizeThatFit() method to compute the height.
-        // WANRING: You must also set the UITableView.estimatedRowHeight for this to work.
         return UITableView.automaticDimension
     }
 }
 
-extension Array {
-    subscript(safe index: Index) -> Element? {
-        let isValidIndex = index >= 0 && index < count
-        return isValidIndex ? self[index] : nil
-    }
-}
+

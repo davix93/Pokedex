@@ -45,6 +45,20 @@ class PokedexAPIClient: APIClient {
                 return results
         }, completion: completion)
     }
+    
+    typealias PokemonSpriteCompletionHandler = (Result<PokemonSprite?, NetworkError>) -> Void
+    
+    func getPokemonSprite(number: Int, completion: @escaping PokemonSpriteCompletionHandler){
+        
+        let urlString = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(number).png"
+
+        self.fetchData(from: urlString,
+              decode: { json -> PokemonSprite? in
+                
+                guard let results = json as? PokemonSprite else { return nil }
+                return results
+        }, completion: completion)
+    }
     //    typealias DetailCompletionHandler = (Result<Detail?, APIError>) -> Void
 //
 //    func getMoreInfoForProduct(withId id: String, completion: @escaping DetailCompletionHandler) {

@@ -32,6 +32,10 @@ class PokedexCell: UITableViewCell, PokeView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        self.sprite.image = nil
+    }
+    
     func setup() {
         self.contentView.addSubview(self.backgroundCell)
         self.backgroundCell.addSubview(self.nameLabel)
@@ -52,6 +56,7 @@ class PokedexCell: UITableViewCell, PokeView {
         self.contentView.backgroundColor = UIColor(red: 0.92, green: 0.39, blue: 0.33, alpha: 1)
         
     }
+    
     func configure(name: String, number: String) {
         self.nameLabel.text = name
         self.numberLabel.text = "#\(number)"

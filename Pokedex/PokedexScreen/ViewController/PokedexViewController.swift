@@ -12,6 +12,8 @@ class PokedexViewController: UIViewController {
     
 //    var pokemons: [NamedAPIResource]?
     var pokedexAPIClient = PokedexAPIClient()
+    var isLoading = false
+    
     
     private var mainView: PokedexView {
         return self.view as! PokedexView
@@ -20,6 +22,27 @@ class PokedexViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setup()
+        self.style()
+    }
+
+    
+    override func loadView() {
+        self.view = PokedexView()
+        
+        self.mainView.fetchNextPokemons = { [unowned self] start, count in
+            self.fetchPokemons(from: start, times: count)
+        }
+    }
+    
+    func setup() {
+        
+        self.fetchPokedex()
+        self.fetchPokemons(from: 1, times: 20)
+        
+    }
+    
+    func style() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.tintColor = UIColor.white
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.92, green: 0.38, blue: 0.32, alpha: 1)
@@ -27,19 +50,11 @@ class PokedexViewController: UIViewController {
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
         self.title = "Pokedex"
-        
-        self.fetchPokedex()
-        self.fetchPokemons(from: 1, times: 20)
-        
     }
-
     
-    override func loadView() {
-        self.view = PokedexView()
-        self.mainView.fetchNextPokemons = { [unowned self] start, count in
-            self.fetchPokemons(from: start, times: count)
-        }
-    }
+}
+    
+extension PokedexViewController {
     
     private func fetchPokedex() {
         
@@ -55,6 +70,37 @@ class PokedexViewController: UIViewController {
         
     }
     
+    private func fetchPokemonSprites(from start: Int, times count: Int) {
+        
+        guard !isLoading else {return}
+        
+        self.isLoading = true
+        
+        var sprites: [PokemonSprite] = []
+        let dspGroup = DispatchGroup()
+        let end = start + count
+        
+        for index in start...end{
+            dspGroup.enter()
+            self.pokedexAPIClient.getPokemonSprite(number: index, completion: { result in
+                switch result {
+                case .success(let sprite):
+                    sprites.append(sprite!)
+                case .failure(let error):
+                    print(error)
+                }
+                dspGroup.leave()
+            })
+        }
+        dspGroup.notify(queue: .main) {
+            
+            sprites.sort { $0.sprite < $1.sprite }
+            self.mainView.pokeSprites.append(contentsOf: sprites)
+            
+            self.isLoading = false
+        }
+    }
+
     private func fetchPokemons(from start: Int, times count: Int) {
         
         var tmpPokemons: [Pokemon] = []
@@ -74,8 +120,10 @@ class PokedexViewController: UIViewController {
             })
         }
         dspGroup.notify(queue: .main) {
-            self.mainView.pokemons.append(contentsOf: tmpPokemons)
             
+            tmpPokemons.sort { $0.number < $1.number }
+            tmpPokemons.forEach({pkmn in print(pkmn.number)})
+            self.mainView.pokemons.append(contentsOf: tmpPokemons)
         }
     }
 
