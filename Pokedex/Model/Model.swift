@@ -17,7 +17,7 @@ struct Pokemon: Decodable {
     let stats: [PokemonStat]
 
     private enum CodingKeys: String, CodingKey {
-            case name,types,stats
+            case name, types, stats
             case number = "id"
     }
 }
@@ -40,4 +40,3 @@ struct NamedAPIResource: Decodable {
     let name: String
     let url: String
 }
-

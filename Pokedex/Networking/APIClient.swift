@@ -9,25 +9,24 @@
 import Foundation
 
 protocol APIClient {
-    
+
     var session: URLSession { get }
     func fetchData<T: Decodable>(from url: URLRequest,
-                             decode: @escaping (Decodable) -> T?,
-                             completion: @escaping (Result<T, NetworkError>) -> Void)
+                                 decode: @escaping (Decodable) -> T?,
+                                 completion: @escaping (Result<T, NetworkError>) -> Void)
 }
 
-
 extension APIClient {
-    
+
     func fetchData<T: Decodable>(from url: URLRequest,
                                  decode: @escaping (Decodable) -> T?,
                                  completion: @escaping (Result<T, NetworkError>) -> Void) {
-        
-        session.dataTask(with: url) { data, response, error in
+
+        session.dataTask(with: url) { data, _, error in
             if let _ = error as? URLError {
                 completion(.failure(.requestFailed))
             }
-            
+
             if let data = data {
                 do {
                     let genericModel = try JSONDecoder().decode(T.self, from: data)
@@ -43,6 +42,6 @@ extension APIClient {
                 }
             }
         }.resume()
-        
+
     }
 }

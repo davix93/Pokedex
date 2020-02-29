@@ -18,13 +18,13 @@ enum PokeAPI {
 extension PokeAPI: Endpoint {
     var base: String {
         switch self {
-        case .pokedex,.pokemon: return "https://pokeapi.co"
+        case .pokedex, .pokemon: return "https://pokeapi.co"
         case .sprite: return "https://raw.githubusercontent.com"
         case .pokemonImage: return "https://pokeres.bastionbot.org"
         }
-        
+
     }
-    
+
     var path: String {
         switch self {
         case .pokedex: return "/api/v2/pokemon"
@@ -33,7 +33,7 @@ extension PokeAPI: Endpoint {
         case .pokemonImage(let number): return "/images/pokemon/\(number).png"
         }
     }
-    
+
     var queryItems: [URLQueryItem] {
         switch self {
         case .pokedex(let limit): return [ URLQueryItem(name: "limit", value: String(limit)) ]

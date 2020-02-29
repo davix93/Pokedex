@@ -10,64 +10,62 @@ import Foundation
 import UIKit
 import PinLayout
 
-class TypeCell: UICollectionViewCell,PokeView {
-    
+class TypeCell: UICollectionViewCell, PokeView {
+
     static let reuseIdentifier = "TypeCell"
-    
+
     var name = UILabel()
-    
+
     var type: PokeType? {
         didSet {
             self.update()
         }
     }
-    
+
     override init(frame: CGRect) {
-        
+
         super.init(frame: frame)
-        
+
         self.setup()
         self.style()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
     func setup() {
         self.contentView.addSubview(self.name)
     }
-    
+
     func style() {
-        
+
         self.name.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         self.name.textColor = .white
         self.layer.cornerRadius = 8
         self.contentView.layer.masksToBounds = true
 
     }
-    
+
     func update() {
         guard let type = self.type else {return}
         self.backgroundColor = type.getColor()
         self.name.text = type.rawValue.capitalizingFirstLetter()
     }
-    
+
     func layout() {
         self.name.pin
             .center()
             .sizeToFit()
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         self.layout()
     }
-    
-}
 
+}
 
 enum PokeType: String {
     case normal
@@ -88,8 +86,8 @@ enum PokeType: String {
     case dragon
     case steel
     case fairy
-    
-    func getColor() -> UIColor{
+
+    func getColor() -> UIColor {
         switch self.rawValue {
         case PokeType.normal.rawValue:
             return normalColor
@@ -132,4 +130,3 @@ enum PokeType: String {
         }
     }
 }
-

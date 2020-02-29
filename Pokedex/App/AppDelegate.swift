@@ -11,10 +11,8 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
         let app = UINavigationBar.appearance()
         app.barTintColor = pokedexColor
         app.backgroundColor = .clear
@@ -22,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         app.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         app.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         app.prefersLargeTitles = true
-
 
         // Override point for customization after application launch.
         return true
@@ -42,6 +39,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-
 }
-

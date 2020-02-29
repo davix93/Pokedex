@@ -19,15 +19,12 @@ extension Endpoint {
         var components = URLComponents(string: base)!
         components.path = path
         components.queryItems = queryItems
-        
         return components
     }
-    
     var request: URLRequest {
         let url = urlComponents.url!
         return URLRequest(url: url)
     }
-    
     var url: URL {
         return urlComponents.url!
     }
