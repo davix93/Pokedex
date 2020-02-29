@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PokeView.swift
 //  Pokedex
 //
 //  Created by Davide Tarantino on 27/02/2020.

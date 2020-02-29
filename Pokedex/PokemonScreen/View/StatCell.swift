@@ -1,5 +1,5 @@
 //
-//  StatLabel.swift
+//  StatCell.swift
 //  Pokedex
 //
 //  Created by Davide Tarantino on 28/02/2020.

@@ -1,5 +1,5 @@
 //
-//  PokedexTableViewCell.swift
+//  PokedexCell.swift
 //  Pokedex
 //
 //  Created by Davide Tarantino on 27/02/2020.

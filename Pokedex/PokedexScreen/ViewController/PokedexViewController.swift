@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PokedexViewController.swift
 //  Pokedex
 //
 //  Created by Davide Tarantino on 26/02/2020.
