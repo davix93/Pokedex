@@ -42,14 +42,31 @@ class PokedexViewController: UIViewController {
     
     func setup() {
         self.fetchPokedex()
+        
+        let search = UISearchController(searchResultsController: nil)
+        search.searchResultsUpdater = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Search a Pokemon"
+        search.searchBar.searchTextField.backgroundColor = .white
+        navigationItem.searchController = search
     }
     
     func style() {
         self.title = "Pokedex"
     }
     
-}
     
+
+    
+}
+
+extension PokedexViewController: UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        print(text)
+    }
+}
+
 extension PokedexViewController {
     
     func cachePokemon(pkmn: Pokemon) {

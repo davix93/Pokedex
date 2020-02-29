@@ -39,6 +39,8 @@ class PokedexAPIClient: APIClient {
                 
         let request = PokeAPI.pokemon(number: number).request
         
+        print(request.url)
+        
         self.fetchData(from: request, decode: { json -> Pokemon? in
             
             guard let results = json as? Pokemon else { return nil }

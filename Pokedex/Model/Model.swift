@@ -13,36 +13,25 @@ struct Pokedex: Decodable {
 struct Pokemon: Decodable {
     let number: Int
     let name: String
-    let image: PokemonSprite
     var types: [PokemonType]
     let stats: [PokemonStat]
 
     private enum CodingKeys: String, CodingKey {
             case name,types,stats
-            case image = "sprites", number = "id"
-    }
-}
-
-struct PokemonSprite: Decodable {
-    let sprite: String
-    
-    private enum CodingKeys: String, CodingKey {
-        case sprite = "front_default"
+            case number = "id"
     }
 }
 
 struct PokemonType: Decodable {
-    let slot: Int
     let type: NamedAPIResource
 }
 
 struct PokemonStat: Decodable {
     let stat: NamedAPIResource
-    let effort: Int
     let baseStatValue: Int
 
     private enum CodingKeys: String, CodingKey {
-        case stat, effort
+        case stat
         case baseStatValue = "base_stat"
     }
 }
