@@ -86,8 +86,8 @@ class PokemonView: UIView, PokeView {
         self.pokemonView.pin
             .top(10%)
             .hCenter()
-            .width(250)
-            .height(250)
+            .height(28%)
+            .aspectRatio(1)
 
         self.nameLabel.pin
             .below(of: self.pokemonView)

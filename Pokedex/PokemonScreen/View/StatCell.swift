@@ -70,16 +70,16 @@ class StatCell: UITableViewCell {
         self.statLabel.pin
             .left()
             .marginLeft(2%)
-            .top()
-            .bottom()
             .width(5%)
-            .sizeToFit(.height)
+            .sizeToFit(.heightFlexible)
+            .center()
 
         self.statNumberLabel.pin
             .left(18%)
-            .top()
-            .bottom()
             .width(9%)
+            .height(of: self.statLabel)
+            .center()
+
 
         self.statBar.pin
             .after(of: statNumberLabel, aligned: .center)
@@ -88,7 +88,7 @@ class StatCell: UITableViewCell {
             .height(25%)
 
         self.contentView.pin
-            .wrapContent(.vertically, padding: 2)
+            .wrapContent(.vertically, padding: 11.5)
     }
 
     override func layoutSubviews() {
