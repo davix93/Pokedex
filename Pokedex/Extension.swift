@@ -57,3 +57,17 @@ extension UIColor {
         self.init(red: CGFloat(red)/255, green: CGFloat(green)/255, blue: CGFloat(blue)/255, alpha: CGFloat(alpha)/255)
     }
 }
+
+extension UIViewController {
+    func showAlert(withTitle title: String, andMessage message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Close", style: .cancel) { action in
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        closeAction.setValue(UIColor.black, forKey: "titleTextColor")
+        alertController.addAction(closeAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+}

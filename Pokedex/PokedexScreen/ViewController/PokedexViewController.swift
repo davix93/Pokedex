@@ -83,7 +83,7 @@ extension PokedexViewController {
             case .success(let pokedex):
                 self.mainView.pokedex = pokedex
             case .failure(let error):
-                print(error)
+                self.showAlert(withTitle: "Ops!", andMessage: error.localizedDescription)
             }
 
         })

@@ -77,7 +77,11 @@ extension PokemonViewController {
         
         guard self.pokemon == nil else {
             self.dispatchGroup.notify(queue: .main){
-                self.mainView.pokemonView.image = pkmnImg
+                guard let img = pkmnImg else {
+                    self.showAlert(withTitle: "Ops!", andMessage: "Something went wrong, try again.")
+                    return
+                }
+                self.mainView.pokemonView.image = img
                 loadingView.stopAnimating {
                     loadingView.removeFromSuperview()
                 }
@@ -90,11 +94,19 @@ extension PokemonViewController {
         }
         
         self.dispatchGroup.notify(queue: .main) { [unowned self] in
-            self.pokemon = pkmn
-            self.mainView.pokemonView.image = pkmnImg
             loadingView.stopAnimating {
                 loadingView.removeFromSuperview()
             }
+            guard
+                let img = pkmnImg,
+                let poke = pkmn
+            else {
+                self.showAlert(withTitle: "Ops!", andMessage: "Something went wrong, try again.")
+                return
+            }
+            self.pokemon = poke
+            self.mainView.pokemonView.image = img
+            
 
         }
     }
@@ -107,8 +119,7 @@ extension PokemonViewController {
             switch result {
             case .success(let value):
                 completion(value.image)
-            case .failure(let error):
-                print("Error: \(error)")
+            case .failure( _):
                 completion(nil)
             }
             self.dispatchGroup.leave()
@@ -123,8 +134,7 @@ extension PokemonViewController {
                 case .success(let pokemon):
                     self.cachePokemon?(pokemon)
                     completion(pokemon)
-                case .failure(let error):
-                    print("Error: \(error)")
+                case .failure( _):
                     completion(nil)
                 }
                 self.dispatchGroup.leave()
