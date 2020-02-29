@@ -7,7 +7,7 @@
 //
 
 struct Pokedex: Decodable {
-    let results: [NamedAPIResource]
+    var results: [NamedAPIResource]
 }
 
 struct Pokemon: Decodable {

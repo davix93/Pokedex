@@ -14,7 +14,15 @@ class PokedexView: UIView, PokeView {
     private let tableView = UITableView()
     var pokedex: Pokedex? {
         didSet {
-            self.tableView.reloadData()
+            self.filteredPokedex = self.pokedex
+            self.update()
+
+        }
+    }
+    
+    var filteredPokedex: Pokedex? {
+        didSet {
+            self.update()
         }
     }
     
@@ -45,6 +53,10 @@ class PokedexView: UIView, PokeView {
 
     }
     
+    func update() {
+        self.tableView.reloadData()
+    }
+    
     func layout() {
         self.tableView.pin.all()
     }
@@ -60,27 +72,36 @@ extension PokedexView: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let dex = pokedex else {return 0}
+        guard let dex = filteredPokedex else {return 0}
         return dex.results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let dex = pokedex else {return UITableViewCell()}
+        guard
+            let dex = self.filteredPokedex,
+            let origDex = self.pokedex,
+            let index = origDex.results.firstIndex(where: { $0.name == dex.results[indexPath.row].name })
+        else {return UITableViewCell()}
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PokedexCell.reuseIdentifier, for: indexPath) as! PokedexCell
         
-        cell.cellModel = PokedexCellModel(name: dex.results[indexPath.row].name.capitalizingFirstLetter(), number: String(indexPath.row + 1))
+        cell.cellModel = PokedexCellModel(name: dex.results[indexPath.row].name.capitalizingFirstLetter(), number: String(index + 1))
         
-        let request = PokeAPI.sprite(number: indexPath.row + 1).url
+        let request = PokeAPI.sprite(number: index + 1).url
         cell.sprite.kf.setImage(with: request)
                 
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        guard
+            let dex = self.filteredPokedex,
+            let origDex = self.pokedex,
+            let index = origDex.results.firstIndex(where: { $0.name == dex.results[indexPath.row].name })
+        else {return}
+        
         DispatchQueue.main.async {
-            self.openPokemonDetail?(indexPath.row + 1)
+            self.openPokemonDetail?(index + 1)
         }
     }
     

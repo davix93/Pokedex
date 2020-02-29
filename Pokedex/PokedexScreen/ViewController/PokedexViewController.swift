@@ -62,8 +62,16 @@ class PokedexViewController: UIViewController {
 
 extension PokedexViewController: UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        print(text)
+        guard
+            let text = searchController.searchBar.text,
+            let dex = self.mainView.pokedex
+        else { return }
+        
+        let results = text.isEmpty ? dex.results : dex.results.filter({
+            $0.name.range(of: text, options: .caseInsensitive) != nil
+        })
+        
+        self.mainView.filteredPokedex = Pokedex(results: results)
     }
 }
 
