@@ -14,7 +14,7 @@ struct Pokemon: Decodable {
     let number: Int
     let name: String
     let image: PokemonSprite
-    let types: [PokemonType]
+    var types: [PokemonType]
     let stats: [PokemonStat]
 
     private enum CodingKeys: String, CodingKey {

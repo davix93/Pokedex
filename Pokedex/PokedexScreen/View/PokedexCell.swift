@@ -21,6 +21,12 @@ class PokedexCell: UITableViewCell, PokeView {
     var numberLabel = UILabel()
     var sprite = UIImageView()
     
+    var cellModel: PokedexCellModel?{
+        didSet{
+            self.update()
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -44,6 +50,8 @@ class PokedexCell: UITableViewCell, PokeView {
     }
     
     func style() {
+        self.selectionStyle = .none
+        
         self.nameLabel.textColor = .black
         self.nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         
@@ -51,15 +59,16 @@ class PokedexCell: UITableViewCell, PokeView {
         self.numberLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         
         self.backgroundCell.backgroundColor = .white
-        self.backgroundCell.layer.cornerRadius = 8
+        self.backgroundCell.layer.cornerRadius = 16
         
-        self.contentView.backgroundColor = UIColor(red: 0.92, green: 0.39, blue: 0.33, alpha: 1)
+        self.contentView.backgroundColor = pokedexColor
         
     }
     
-    func configure(name: String, number: String) {
-        self.nameLabel.text = name
-        self.numberLabel.text = "#\(number)"
+    func update() {
+        guard let model = self.cellModel else {return}
+        self.nameLabel.text = model.name
+        self.numberLabel.text = "#\(model.number)"
         
         self.setNeedsLayout()
         self.layoutIfNeeded()
@@ -87,6 +96,8 @@ class PokedexCell: UITableViewCell, PokeView {
             .horizontally(4%)
             .wrapContent(.vertically, padding: 5)
         
+        self.contentView.pin
+            .wrapContent(.vertically, padding: 5)
         
     }
     
@@ -99,7 +110,20 @@ class PokedexCell: UITableViewCell, PokeView {
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         self.contentView.pin.width(size.width)
         self.layout()
-        return CGSize(width: self.contentView.frame.width, height: self.backgroundCell.frame.maxY + 10)
+        return CGSize(width: self.contentView.frame.width, height: self.contentView.frame.maxY)
     }
     
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        self.contentView.backgroundColor = highlighted ? selectedColor : pokedexColor
+    }
+    
+
+}
+
+
+struct PokedexCellModel {
+    var name: String
+    var number: String
 }

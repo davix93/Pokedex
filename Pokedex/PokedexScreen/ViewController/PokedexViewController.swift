@@ -10,15 +10,13 @@ import UIKit
 
 class PokedexViewController: UIViewController {
     
-//    var pokemons: [NamedAPIResource]?
     var pokedexAPIClient = PokedexAPIClient()
-    var isLoading = false
-    
     
     private var mainView: PokedexView {
         return self.view as! PokedexView
     }
-    
+    var pokemons: [Int : Pokemon] = [:]
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,25 +28,23 @@ class PokedexViewController: UIViewController {
     override func loadView() {
         self.view = PokedexView()
         
-        self.mainView.fetchNextPokemons = { [unowned self] start, count in
-            self.fetchPokemons(from: start, times: count)
+        self.mainView.openPokemonDetail = { [unowned self] number in
+            let vc = PokemonViewController(number: number)
+            if self.pokemons[number-1] == nil {
+                vc.cachePokemon = { [unowned self] pkmn in self.cachePokemon(pkmn: pkmn!)}
+            }
+            else {
+                vc.pokemon = self.pokemons[number-1]
+            }
+            self.present(vc,animated: true)
         }
     }
     
     func setup() {
-        
         self.fetchPokedex()
-        self.fetchPokemons(from: 1, times: 20)
-        
     }
     
     func style() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.92, green: 0.38, blue: 0.32, alpha: 1)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-
         self.title = "Pokedex"
     }
     
@@ -56,9 +52,13 @@ class PokedexViewController: UIViewController {
     
 extension PokedexViewController {
     
+    func cachePokemon(pkmn: Pokemon) {
+        self.pokemons[pkmn.number - 1] = pkmn
+    }
+    
     private func fetchPokedex() {
         
-        self.pokedexAPIClient.getPokedex(count: 964, completion: { result in
+        self.pokedexAPIClient.getPokedex(count: 807, completion: { result in
             switch result {
             case .success(let pokedex):
                 self.mainView.pokedex = pokedex
@@ -69,62 +69,4 @@ extension PokedexViewController {
         })
         
     }
-    
-    private func fetchPokemonSprites(from start: Int, times count: Int) {
-        
-        guard !isLoading else {return}
-        
-        self.isLoading = true
-        
-        var sprites: [PokemonSprite] = []
-        let dspGroup = DispatchGroup()
-        let end = start + count
-        
-        for index in start...end{
-            dspGroup.enter()
-            self.pokedexAPIClient.getPokemonSprite(number: index, completion: { result in
-                switch result {
-                case .success(let sprite):
-                    sprites.append(sprite!)
-                case .failure(let error):
-                    print(error)
-                }
-                dspGroup.leave()
-            })
-        }
-        dspGroup.notify(queue: .main) {
-            
-            sprites.sort { $0.sprite < $1.sprite }
-            self.mainView.pokeSprites.append(contentsOf: sprites)
-            
-            self.isLoading = false
-        }
-    }
-
-    private func fetchPokemons(from start: Int, times count: Int) {
-        
-        var tmpPokemons: [Pokemon] = []
-        let dspGroup = DispatchGroup()
-        let end = start + count
-        
-        for index in start...end{
-            dspGroup.enter()
-            self.pokedexAPIClient.getPokemon(number: index, completion: { result in
-                switch result {
-                case .success(let pokemon):
-                    tmpPokemons.append(pokemon!)
-                case .failure(let error):
-                    print(error)
-                }
-                dspGroup.leave()
-            })
-        }
-        dspGroup.notify(queue: .main) {
-            
-            tmpPokemons.sort { $0.number < $1.number }
-            tmpPokemons.forEach({pkmn in print(pkmn.number)})
-            self.mainView.pokemons.append(contentsOf: tmpPokemons)
-        }
-    }
-
 }

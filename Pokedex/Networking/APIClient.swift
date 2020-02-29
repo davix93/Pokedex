@@ -11,7 +11,7 @@ import Foundation
 protocol APIClient {
     
     var session: URLSession { get }
-    func fetchData<T: Decodable>(from urlString: String,
+    func fetchData<T: Decodable>(from url: URLRequest,
                              decode: @escaping (Decodable) -> T?,
                              completion: @escaping (Result<T, NetworkError>) -> Void)
 }
@@ -19,14 +19,9 @@ protocol APIClient {
 
 extension APIClient {
     
-    func fetchData<T: Decodable>(from urlString: String,
+    func fetchData<T: Decodable>(from url: URLRequest,
                                  decode: @escaping (Decodable) -> T?,
                                  completion: @escaping (Result<T, NetworkError>) -> Void) {
-
-        guard let url = URL(string: urlString) else {
-            completion(.failure(.badURL))
-            return
-        }
         
         session.dataTask(with: url) { data, response, error in
             if let _ = error as? URLError {

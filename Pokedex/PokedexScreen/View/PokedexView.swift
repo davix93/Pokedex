@@ -12,19 +12,13 @@ import PinLayout
 class PokedexView: UIView, PokeView {
        
     private let tableView = UITableView()
-    var pokemons: [Pokemon?] = [] {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
     var pokedex: Pokedex? {
         didSet {
             self.tableView.reloadData()
         }
     }
-    var pokeSprites: [PokemonSprite] = []
     
-    var fetchNextPokemons: ((Int,Int)->())?
+    var openPokemonDetail: ((Int) ->())?
     
     init() {
         super.init(frame: .zero)
@@ -41,11 +35,13 @@ class PokedexView: UIView, PokeView {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(PokedexCell.self, forCellReuseIdentifier: PokedexCell.reuseIdentifier)
-        self.addSubview(tableView)
+        self.addSubview(self.tableView)
     }
     
     func style() {
-        self.tableView.backgroundColor = UIColor(red: 0.92, green: 0.39, blue: 0.33, alpha: 1)
+        self.tableView.backgroundColor = pokedexColor
+        self.tableView.separatorStyle = .none
+        
 
     }
     
@@ -62,13 +58,6 @@ class PokedexView: UIView, PokeView {
 
 extension PokedexView: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let count = self.pokemons.count
-        
-        if indexPath.row == count - 2 {
-            self.fetchNextPokemons?(count + 1 ,10)
-        }
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let dex = pokedex else {return 0}
@@ -80,13 +69,19 @@ extension PokedexView: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PokedexCell.reuseIdentifier, for: indexPath) as! PokedexCell
         
-        cell.configure(name: dex.results[indexPath.row].name, number: String(indexPath.row + 1))
+        cell.cellModel = PokedexCellModel(name: dex.results[indexPath.row].name.capitalizingFirstLetter(), number: String(indexPath.row + 1))
         
-        if let p = pokemons[safe: indexPath.row], let pkmn = p{
-            cell.sprite.kf.setImage(with: URL(string: pkmn.image.sprite))
-        }
-        
+        let request = PokeAPI.sprite(number: indexPath.row + 1).url
+        cell.sprite.kf.setImage(with: request)
+                
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        DispatchQueue.main.async {
+            self.openPokemonDetail?(indexPath.row + 1)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

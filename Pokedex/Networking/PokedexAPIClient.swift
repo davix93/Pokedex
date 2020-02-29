@@ -21,52 +21,32 @@ class PokedexAPIClient: APIClient {
     typealias PokedexCompletionHandler = (Result<Pokedex?, NetworkError>) -> Void
     
     func getPokedex(count: Int, completion: @escaping PokedexCompletionHandler){
-        
-        let urlString = "https://pokeapi.co/api/v2/pokemon/?limit=\(count)"
-
-        self.fetchData(from: urlString,
-              decode: { json -> Pokedex? in
                 
-                guard let results = json as? Pokedex else { return nil }
-                return results
+        let request = PokeAPI.pokedex(limit: count).request
+        
+        self.fetchData(from: request, decode: { json -> Pokedex? in
+            
+            guard let results = json as? Pokedex else { return nil }
+            
+            return results
+            
         }, completion: completion)
     }
     
     typealias PokemonCompletionHandler = (Result<Pokemon?, NetworkError>) -> Void
 
     func getPokemon(number: Int, completion: @escaping PokemonCompletionHandler){
-        
-        let urlString = "https://pokeapi.co/api/v2/pokemon/\(number)"
-
-        self.fetchData(from: urlString,
-              decode: { json -> Pokemon? in
                 
-                guard let results = json as? Pokemon else { return nil }
-                return results
+        let request = PokeAPI.pokemon(number: number).request
+        
+        self.fetchData(from: request, decode: { json -> Pokemon? in
+            
+            guard let results = json as? Pokemon else { return nil }
+            
+            return results
+            
         }, completion: completion)
     }
     
-    typealias PokemonSpriteCompletionHandler = (Result<PokemonSprite?, NetworkError>) -> Void
     
-    func getPokemonSprite(number: Int, completion: @escaping PokemonSpriteCompletionHandler){
-        
-        let urlString = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(number).png"
-
-        self.fetchData(from: urlString,
-              decode: { json -> PokemonSprite? in
-                
-                guard let results = json as? PokemonSprite else { return nil }
-                return results
-        }, completion: completion)
-    }
-    //    typealias DetailCompletionHandler = (Result<Detail?, APIError>) -> Void
-//
-//    func getMoreInfoForProduct(withId id: String, completion: @escaping DetailCompletionHandler) {
-//        let request = YooxAPI.detail(id: id).request
-//
-//        fetch(with: request, decode: { json -> Detail? in
-//            guard let detail = json as? Detail else { return nil }
-//            return detail
-//        }, completion: completion)
-//    }
 }
