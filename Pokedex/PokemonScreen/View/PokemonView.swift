@@ -19,6 +19,7 @@ class PokemonView: UIView, PokeView {
     let typesCollection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     let flowLayout = UICollectionViewFlowLayout()
     let statsTableView = UITableView()
+    let pokeballImageView = UIImageView()
 
     var pokemon: Pokemon? {
         didSet {
@@ -50,15 +51,17 @@ class PokemonView: UIView, PokeView {
         self.typesCollection.register(TypeCell.self, forCellWithReuseIdentifier: TypeCell.reuseIdentifier)
 
         self.addSubview(self.backgroundView)
+        self.addSubview(self.pokeballImageView)
         self.addSubview(self.pokemonView)
         self.addSubview(self.numberLabel)
         self.addSubview(self.nameLabel)
         self.addSubview(self.typesCollection)
         self.addSubview(self.statsTableView)
+        
     }
 
     func style() {
-        self.backgroundColor = pokedexColor
+        self.backgroundColor = .white
 
         self.backgroundView.backgroundColor = .white
 
@@ -74,10 +77,19 @@ class PokemonView: UIView, PokeView {
 
         self.statsTableView.separatorStyle = .none
         self.statsTableView.backgroundColor = .clear
+        
+        self.pokeballImageView.backgroundColor = .clear
+        self.pokeballImageView.image = UIImage(named: "pokeball")
 
     }
 
     func layout() {
+        self.pokeballImageView.pin
+            .left(5%)
+            .top(7%)
+            .width(40%)
+            .aspectRatio(1)
+        
         self.numberLabel.pin
             .top(3%)
             .hCenter()

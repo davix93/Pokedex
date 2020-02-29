@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PokemonViewController: UIViewController {
 
     var pokemonNumber = 0
+    let dispatchGroup = DispatchGroup()
     var pokemon: Pokemon? {
         didSet {
             self.mainView.pokemon = self.pokemon
@@ -49,9 +51,7 @@ class PokemonViewController: UIViewController {
     }
 
     func setup() {
-        self.setPokemonImage()
-        guard pokemon == nil else {return}
-        self.fetchPokemon(number: pokemonNumber)
+        self.fetchPokemonViewData()
     }
 
     func style() {
@@ -61,21 +61,73 @@ class PokemonViewController: UIViewController {
 }
 
 extension PokemonViewController {
+    
+    private func fetchPokemonViewData() {
+        var pkmn: Pokemon?
+        var pkmnImg: UIImage?
+        
+        let loadingView = LoadingIndicatorView(frame: UIScreen.main.bounds, image: UIImage(named: "poke")!)
+        self.view.addSubview(loadingView)
+        loadingView.startAnimating()
+        
+        self.setPokemonImage() { image in
+            pkmnImg = image
+        }
+        
+        
+        guard self.pokemon == nil else {
+            self.dispatchGroup.notify(queue: .main){
+                self.mainView.pokemonView.image = pkmnImg
+                loadingView.stopAnimating {
+                    loadingView.removeFromSuperview()
+                }
+            }
+            return
+        }
 
-    private func setPokemonImage() {
+        self.fetchPokemon(number: pokemonNumber) { element in
+            pkmn = element
+        }
+        
+        self.dispatchGroup.notify(queue: .main) { [unowned self] in
+            self.pokemon = pkmn
+            self.mainView.pokemonView.image = pkmnImg
+            loadingView.stopAnimating {
+                loadingView.removeFromSuperview()
+            }
+
+        }
+    }
+    
+    
+    private func setPokemonImage(completion: @escaping (UIImage?) -> Void) {
+        self.dispatchGroup.enter()
         let request = PokeAPI.pokemonImage(number: self.pokemonNumber).url
-        self.mainView.pokemonView.kf.setImage(with: request, options: [.transition(.fade(0.2))])
+        KingfisherManager.shared.retrieveImage(with: request, options: nil, progressBlock: nil) { [unowned self] result in
+            switch result {
+            case .success(let value):
+                completion(value.image)
+            case .failure(let error):
+                print("Error: \(error)")
+                completion(nil)
+            }
+            self.dispatchGroup.leave()
+        }
+        
     }
 
-    private func fetchPokemon(number: Int) {
-            self.pokedexAPIClient.getPokemon(number: number, completion: { result in
+    private func fetchPokemon(number: Int, completion: @escaping (Pokemon?) -> Void) {
+        self.dispatchGroup.enter()
+            self.pokedexAPIClient.getPokemon(number: number, completion: { [unowned self] result in
                 switch result {
                 case .success(let pokemon):
-                    self.pokemon = pokemon
                     self.cachePokemon?(pokemon)
+                    completion(pokemon)
                 case .failure(let error):
-                    print(error)
+                    print("Error: \(error)")
+                    completion(nil)
                 }
+                self.dispatchGroup.leave()
             })
         }
 }

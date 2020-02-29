@@ -32,6 +32,7 @@
 		6BE1CC9B240961E800DE0CFE /* TypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1CC9A240961E800DE0CFE /* TypeCell.swift */; };
 		6BE1CC9F24099C1F00DE0CFE /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1CC9E24099C1F00DE0CFE /* StatCell.swift */; };
 		6BE1CCA1240A76D500DE0CFE /* LevelBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1CCA0240A76D500DE0CFE /* LevelBar.swift */; };
+		6BE1CCA4240AEBC600DE0CFE /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1CCA3240AEBC600DE0CFE /* LoadingIndicatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		6BE1CC9A240961E800DE0CFE /* TypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCell.swift; sourceTree = "<group>"; };
 		6BE1CC9E24099C1F00DE0CFE /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		6BE1CCA0240A76D500DE0CFE /* LevelBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelBar.swift; sourceTree = "<group>"; };
+		6BE1CCA3240AEBC600DE0CFE /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				6B76BFAF2407CC7F005B1AC3 /* Networking */,
 				6B76BFB52407F15F005B1AC3 /* PokedexScreen */,
 				6BE1CC97240933DA00DE0CFE /* PokemonScreen */,
+				6BC67327240AFC2B00C7A5B8 /* CustomViews */,
 				6BE1CC8924084EF000DE0CFE /* Resources */,
 				6BE1CC8A24084F1C00DE0CFE /* Extension.swift */,
 			);
@@ -210,6 +213,15 @@
 			path = PokedexScreen;
 			sourceTree = "<group>";
 		};
+		6BC67327240AFC2B00C7A5B8 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				6BE1CCA0240A76D500DE0CFE /* LevelBar.swift */,
+				6BE1CCA3240AEBC600DE0CFE /* LoadingIndicatorView.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		6BE1CC8724084EAE00DE0CFE /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,7 +280,6 @@
 				6BE1CC95240933D500DE0CFE /* PokemonView.swift */,
 				6BE1CC9A240961E800DE0CFE /* TypeCell.swift */,
 				6BE1CC9E24099C1F00DE0CFE /* StatCell.swift */,
-				6BE1CCA0240A76D500DE0CFE /* LevelBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -445,6 +456,7 @@
 				6BE1CC8B24084F1C00DE0CFE /* Extension.swift in Sources */,
 				6B76BF772406D831005B1AC3 /* SceneDelegate.swift in Sources */,
 				6B76BFB924081F19005B1AC3 /* PokeVIew.swift in Sources */,
+				6BE1CCA4240AEBC600DE0CFE /* LoadingIndicatorView.swift in Sources */,
 				6BE1CC9224092B9300DE0CFE /* Constants.swift in Sources */,
 				6BE1CC9B240961E800DE0CFE /* TypeCell.swift in Sources */,
 				6B76BFA52406DE7C005B1AC3 /* Model.swift in Sources */,

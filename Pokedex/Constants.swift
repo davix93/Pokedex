@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-let pokedexColor = UIColor(red: 0.92, green: 0.38, blue: 0.32, alpha: 1)
-let selectedColor = UIColor(red: 214/255, green: 50/255, blue: 48/255, alpha: 1)
+let pokedexColor = UIColor("#EB6152")
+let selectedColor = UIColor("#D63230")
 
 let levelBarBackgroundColor = UIColor("#F0F1F1")
 

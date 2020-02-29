@@ -72,13 +72,11 @@ class StatCell: UITableViewCell {
             .marginLeft(2%)
             .width(5%)
             .sizeToFit(.heightFlexible)
-            .center()
 
         self.statNumberLabel.pin
             .left(18%)
             .width(9%)
             .height(of: self.statLabel)
-            .center()
 
 
         self.statBar.pin

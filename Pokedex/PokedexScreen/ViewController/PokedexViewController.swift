@@ -11,7 +11,7 @@ import UIKit
 class PokedexViewController: UIViewController {
 
     var pokedexAPIClient = PokedexAPIClient()
-
+    
     private var mainView: PokedexView {
         return self.view as! PokedexView
     }
@@ -78,7 +78,7 @@ extension PokedexViewController {
 
     private func fetchPokedex() {
 
-        self.pokedexAPIClient.getPokedex(count: 807, completion: { result in
+        self.pokedexAPIClient.getPokedex(count: 807, completion: { [unowned self] result in
             switch result {
             case .success(let pokedex):
                 self.mainView.pokedex = pokedex
