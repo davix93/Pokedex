@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 class PokemonViewController: UIViewController {
-
+    
     var pokemonNumber = 0
     let dispatchGroup = DispatchGroup()
     var pokemon: Pokemon? {
@@ -19,45 +19,45 @@ class PokemonViewController: UIViewController {
         }
     }
     var pokedexAPIClient = PokedexAPIClient()
-
+    
     private var mainView: PokemonView {
         return self.view as! PokemonView
     }
-
+    
     var cachePokemon: ((Pokemon?) -> Void)?
-
+    
     convenience init(number: Int) {
         self.init(nibName: nil, bundle: nil)
         self.pokemonNumber = number
     }
-
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setup()
         self.style()
     }
-
+    
     override func loadView() {
         self.view = PokemonView()
     }
-
+    
     func setup() {
         self.fetchPokemonViewData()
     }
-
+    
     func style() {
         self.title = "Pokedex"
     }
-
+    
 }
 
 extension PokemonViewController {
@@ -74,7 +74,6 @@ extension PokemonViewController {
             pkmnImg = image
         }
         
-        
         guard self.pokemon == nil else {
             self.dispatchGroup.notify(queue: .main){
                 guard let img = pkmnImg else {
@@ -88,7 +87,7 @@ extension PokemonViewController {
             }
             return
         }
-
+        
         self.fetchPokemon(number: pokemonNumber) { element in
             pkmn = element
         }
@@ -100,14 +99,13 @@ extension PokemonViewController {
             guard
                 let img = pkmnImg,
                 let poke = pkmn
-            else {
-                self.showAlert(withTitle: "Ops!", andMessage: "Something went wrong, try again.")
-                return
+                else {
+                    self.showAlert(withTitle: "Ops!", andMessage: "Something went wrong, try again.")
+                    return
             }
             self.pokemon = poke
             self.mainView.pokemonView.image = img
             
-
         }
     }
     
@@ -126,18 +124,18 @@ extension PokemonViewController {
         }
         
     }
-
+    
     private func fetchPokemon(number: Int, completion: @escaping (Pokemon?) -> Void) {
         self.dispatchGroup.enter()
-            self.pokedexAPIClient.getPokemon(number: number, completion: { [unowned self] result in
-                switch result {
-                case .success(let pokemon):
-                    self.cachePokemon?(pokemon)
-                    completion(pokemon)
-                case .failure( _):
-                    completion(nil)
-                }
-                self.dispatchGroup.leave()
-            })
-        }
+        self.pokedexAPIClient.getPokemon(number: number, completion: { [unowned self] result in
+            switch result {
+            case .success(let pokemon):
+                self.cachePokemon?(pokemon)
+                completion(pokemon)
+            case .failure( _):
+                completion(nil)
+            }
+            self.dispatchGroup.leave()
+        })
+    }
 }
