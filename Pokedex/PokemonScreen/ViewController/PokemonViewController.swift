@@ -76,7 +76,9 @@ extension PokemonViewController {
         
         guard self.pokemon == nil else {
             self.dispatchGroup.notify(queue: .main){
-                guard let img = pkmnImg else {
+                guard
+                    let img = pkmnImg
+                else {
                     self.showAlert(withTitle: "Ops!", andMessage: "Something went wrong, try again.")
                     return
                 }
@@ -99,7 +101,7 @@ extension PokemonViewController {
             guard
                 let img = pkmnImg,
                 let poke = pkmn
-                else {
+            else {
                     self.showAlert(withTitle: "Ops!", andMessage: "Something went wrong, try again.")
                     return
             }

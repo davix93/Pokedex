@@ -9,6 +9,7 @@
 import UIKit
 
 class PokedexViewController: UIViewController {
+    let refreshControl = UIRefreshControl()
 
     var pokedexAPIClient = PokedexAPIClient()
     
@@ -39,14 +40,10 @@ class PokedexViewController: UIViewController {
     }
 
     func setup() {
+        self.addSearchBar()
+        self.addRefreshControl()
         self.fetchPokedex()
 
-        let search = UISearchController(searchResultsController: nil)
-        search.searchResultsUpdater = self
-        search.obscuresBackgroundDuringPresentation = false
-        search.searchBar.placeholder = "Search a Pokemon"
-        search.searchBar.searchTextField.backgroundColor = .white
-        navigationItem.searchController = search
     }
 
     func style() {
@@ -71,12 +68,37 @@ extension PokedexViewController: UISearchResultsUpdating {
 }
 
 extension PokedexViewController {
+    
+    @objc func refresh(sender:AnyObject) {
+       // Code to refresh table view
+        self.fetchPokedex(){ [unowned self] in
+            self.refreshControl.endRefreshing()
+        }
+    }
 
     func cachePokemon(pkmn: Pokemon) {
         self.pokemons[pkmn.number - 1] = pkmn
     }
+    
+    func addSearchBar(){
+        let search = UISearchController(searchResultsController: nil)
+        search.searchResultsUpdater = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Search a Pokemon"
+        search.searchBar.searchTextField.backgroundColor = .white
+        navigationItem.searchController = search
+    }
+    
+    func addRefreshControl(){
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh",attributes:  [.foregroundColor: UIColor.white])
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControl.Event.valueChanged)
+        self.mainView.tableView.sendSubviewToBack(self.refreshControl)
+        self.mainView.tableView.addSubview(self.refreshControl)
 
-    private func fetchPokedex() {
+    }
+    
+    private func fetchPokedex(completion: (()->Void)? = {}) {
 
         self.pokedexAPIClient.getPokedex(count: 807, completion: { [unowned self] result in
             switch result {
@@ -85,8 +107,10 @@ extension PokedexViewController {
             case .failure(let error):
                 self.showAlert(withTitle: "Ops!", andMessage: error.localizedDescription)
             }
-
+            completion?()
         })
 
     }
+    
+    
 }

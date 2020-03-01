@@ -11,7 +11,7 @@ import PinLayout
 
 class PokedexView: UIView, PokeView {
 
-    private let tableView = UITableView()
+    let tableView = UITableView()
     var pokedex: Pokedex? {
         didSet {
             self.filteredPokedex = self.pokedex
